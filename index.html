@@ -1,0 +1,245 @@
+<title>Tort-Pirog</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: слоёный "разрез торта". Герой с тортом в разрезе, ниже витрина полосами-коржами, затем факты и адрес. */
+:root {
+  --bg: #F1F5E8;
+  --surface: #FFFFFF;
+  --fg: #2B1422;
+  --muted: #65505B;
+  --line: #D8DFC6;
+  --accent: #C8264F;
+  --accent-ink: #FFFFFF;
+  --pistachio: #9CBF5B;
+  --yolk: #F0BC4A;
+  --sponge: #E5B56B;
+  --jam: #B81E48;
+  --cream: #FFF8EE;
+  --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --font-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C0E17; --surface: #2A1624; --fg: #F7EEF0; --muted: #BBA3AD; --line: #3E2536;
+    --accent: #FF6F91; --accent-ink: #2B1422; --jam: #E04A72;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1C0E17; --surface: #2A1624; --fg: #F7EEF0; --muted: #BBA3AD; --line: #3E2536;
+  --accent: #FF6F91; --accent-ink: #2B1422; --jam: #E04A72;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1080px; margin-inline: auto; display: flex; flex-direction: column; gap: 72px; }
+
+/* header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.logo { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.02em; text-decoration: none; }
+.logo span { color: var(--accent); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--accent); color: var(--accent-ink);
+  font: 600 1rem/1 var(--font-body);
+  padding: 15px 24px; border-radius: 999px; border: 0; text-decoration: none; cursor: pointer;
+  transition: transform .15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn.ghost { background: transparent; color: var(--fg); border: 2px solid var(--fg); padding: 13px 22px; }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+h1 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 5.2vw, 3.6rem); line-height: 1.08; letter-spacing: -0.03em;
+  margin: 0 0 20px; text-wrap: balance;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.lead { font-size: 1.15rem; max-width: 34em; margin: 0 0 28px; color: var(--muted); }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.cake { width: 100%; max-width: 460px; justify-self: center; height: auto; }
+.berry { animation: bob 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.berry:nth-of-type(2) { animation-delay: -1.3s; }
+.berry:nth-of-type(3) { animation-delay: -2.6s; }
+@keyframes bob { 50% { transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .berry { animation: none; } .btn { transition: none; } }
+
+/* facts */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0; border-block: 2px solid var(--fg); }
+.fact { padding: 22px 20px; border-left: 1px solid var(--line); min-width: 0; }
+.fact:first-child { border-left: 0; padding-left: 0; }
+.fact b { display: block; font-family: var(--font-display); font-size: 1.9rem; line-height: 1.1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .fact { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); } .fact:first-child { border-top: 0; } }
+
+/* showcase: bands as cake layers */
+h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 3.6vw, 2.4rem); line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 8px; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0 0 28px; max-width: 40em; }
+.layers { display: flex; flex-direction: column; gap: 6px; }
+.layer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px 32px; align-items: center; padding: 26px 28px; }
+.layer:first-child { border-radius: 28px 28px 8px 8px; }
+.layer:last-child { border-radius: 8px 8px 28px 28px; }
+.layer h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; letter-spacing: -0.02em; margin: 0; }
+.layer p { margin: 0; }
+.l1 { background: #9CBF5B; color: #1D2A0E; }
+.l2 { background: #C8264F; color: #FFFFFF; }
+.l3 { background: #F0BC4A; color: #3A2606; }
+.l4 { background: #5A2745; color: #FBEFF3; }
+@media (max-width: 640px) { .layer { grid-template-columns: 1fr; padding: 22px; } }
+
+/* visit */
+.visit { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 28px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.card h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; letter-spacing: -0.02em; margin: 0; }
+.card p { margin: 0; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tags li { border: 1.5px solid var(--fg); border-radius: 999px; padding: 6px 14px; font-size: .92rem; font-weight: 500; }
+.hours { font-family: var(--font-display); font-size: 2rem; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.phone { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.phone code { font: 600 1.15rem var(--font-body); font-variant-numeric: tabular-nums; user-select: all; }
+.copy { background: none; border: 1.5px solid var(--fg); color: var(--fg); border-radius: 999px; padding: 6px 14px; font: 500 .9rem var(--font-body); cursor: pointer; }
+
+/* final */
+.finale { background: var(--accent); color: var(--accent-ink); border-radius: 32px; padding: clamp(28px, 6vw, 56px); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.finale h2 { margin: 0; }
+.finale p { margin: 0 0 18px; }
+.finale .btn { background: var(--accent-ink); color: var(--accent); }
+.finale .links { display: flex; gap: 16px; flex-wrap: wrap; font-weight: 500; }
+@media (max-width: 720px) { .hero, .finale { grid-template-columns: 1fr; } .cake { max-width: 340px; } }
+footer { color: var(--muted); font-size: .85rem; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#top">Tort<span>-</span>Pirog</a>
+    <a class="btn" href="https://wa.me/77472380995?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%20%D0%B2%20Tort-Pirog." target="_blank" rel="noopener">Написать в WhatsApp</a>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <p class="eyebrow">Кафе-кондитерская · Есиль, Астана</p>
+      <h1>Свежий пирог. Авторский торт. <em>До полуночи.</em></h1>
+      <p class="lead">Авторские десерты и свежая выпечка на проспекте Мангилик Ел. Заходите к кофе, берите с собой или закажите доставку.</p>
+      <div class="cta">
+        <a class="btn" href="#visit">Как нас найти</a>
+        <a class="btn ghost" href="https://2gis.kz/astana/firm/70000001031610939/tab/reviews" target="_blank" rel="noopener">302 отзыва в 2ГИС</a>
+      </div>
+    </div>
+
+    <svg class="cake" viewBox="0 0 420 380" role="img" aria-label="Многослойный торт с ягодами на тарелке">
+      <ellipse cx="210" cy="338" rx="196" ry="26" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+      <ellipse cx="210" cy="330" rx="150" ry="14" fill="var(--line)" opacity=".7"/>
+      <rect x="70" y="255" width="280" height="68" rx="16" fill="var(--sponge)"/>
+      <rect x="70" y="241" width="280" height="16" fill="var(--cream)"/>
+      <rect x="70" y="188" width="280" height="54" fill="var(--sponge)"/>
+      <rect x="70" y="174" width="280" height="16" fill="var(--jam)"/>
+      <rect x="70" y="124" width="280" height="52" fill="var(--sponge)"/>
+      <g fill="#000" opacity=".12">
+        <circle cx="110" cy="285" r="3"/><circle cx="170" cy="300" r="3"/><circle cx="240" cy="280" r="3"/><circle cx="300" cy="298" r="3"/>
+        <circle cx="130" cy="214" r="3"/><circle cx="215" cy="222" r="3"/><circle cx="296" cy="208" r="3"/>
+        <circle cx="105" cy="148" r="3"/><circle cx="190" cy="152" r="3"/><circle cx="280" cy="146" r="3"/>
+      </g>
+      <path d="M62 130 Q58 94 98 100 Q116 68 150 96 Q180 64 210 92 Q240 64 270 96 Q304 68 322 100 Q362 94 358 130 Z" fill="var(--cream)"/>
+      <ellipse cx="226" cy="104" rx="26" ry="6" fill="#000" opacity=".06"/>
+      <g>
+        <circle class="berry" cx="150" cy="84" r="17" fill="var(--jam)"/>
+        <circle class="berry" cx="210" cy="72" r="20" fill="var(--jam)"/>
+        <circle class="berry" cx="272" cy="84" r="17" fill="var(--jam)"/>
+        <circle cx="144" cy="78" r="4" fill="#fff" opacity=".6"/>
+        <circle cx="203" cy="65" r="5" fill="#fff" opacity=".6"/>
+        <circle cx="266" cy="78" r="4" fill="#fff" opacity=".6"/>
+        <ellipse cx="190" cy="62" rx="12" ry="5" transform="rotate(-25 190 62)" fill="var(--pistachio)"/>
+        <ellipse cx="232" cy="58" rx="12" ry="5" transform="rotate(25 232 58)" fill="var(--pistachio)"/>
+      </g>
+    </svg>
+  </section>
+
+  <section class="facts" aria-label="Коротко о кондитерской">
+    <div class="fact"><b>4.9</b><span>оценка в 2ГИС, 380 оценок</span></div>
+    <div class="fact"><b>09:00–24:00</b><span>открыты каждый день</span></div>
+    <div class="fact"><b>3000 ₸</b><span>средний чек по данным 2ГИС</span></div>
+    <div class="fact"><b>118</b><span>фото гостей и кондитерской</span></div>
+  </section>
+
+  <section>
+    <h2>Что в витрине</h2>
+    <p class="sub">Четыре слоя одного вкусного дня. Точный ассортимент на сегодня уточняйте в WhatsApp или в Instagram.</p>
+    <div class="layers">
+      <div class="layer l1"><h3>Авторские десерты</h3><p>Порционные десерты по рецептам Tort-Pirog. Для себя, для двоих, для подарка.</p></div>
+      <div class="layer l2"><h3>Торты</h3><p>К празднику или просто к чаю. Про торты на заказ и сроки спросите в WhatsApp.</p></div>
+      <div class="layer l3"><h3>Свежая выпечка</h3><p>Пироги и выпечка к кофе. Свежая, как и обещает вывеска.</p></div>
+      <div class="layer l4"><h3>Кофе и чай</h3><p>Выпить в зале или взять с собой по дороге.</p></div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <h2>Три способа взять десерт</h2>
+    <p class="sub">Присесть, забрать или получить домой.</p>
+    <div class="visit">
+      <div class="card">
+        <h3>В зале</h3>
+        <p>Посидеть с десертом и кофе, пока на улице ветер.</p>
+        <ul class="tags"><li>Wi-Fi для гостей</li><li>Туалет</li><li>Открыто до 24:00</li></ul>
+      </div>
+      <div class="card">
+        <h3>С собой</h3>
+        <p>Кофе и чай в стакане, десерт в коробке.</p>
+        <ul class="tags"><li>Кофе с собой</li><li>Чай с собой</li></ul>
+      </div>
+      <div class="card">
+        <h3>Доставка</h3>
+        <p>Напишите в WhatsApp, и мы подскажем, что можно привезти.</p>
+        <div class="phone"><code>+7 747 238 09 95</code><button class="copy" id="copy" type="button">Скопировать</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale">
+    <div>
+      <h2>Проспект Мангилик Ел, 51/5</h2>
+      <p style="margin-top:12px">Есиль район, Астана. Каждый день с 9 утра до полуночи.</p>
+      <div class="links">
+        <a href="https://2gis.kz/astana/directions/points/%7C71.421839%2C51.093849%3B70000001031610939" target="_blank" rel="noopener">Маршрут в 2ГИС</a>
+        <a href="https://instagram.com/tortpirog.kz" target="_blank" rel="noopener">Instagram @tortpirog.kz</a>
+      </div>
+    </div>
+    <div>
+      <a class="btn" href="https://wa.me/77472380995?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%20%D0%B2%20Tort-Pirog." target="_blank" rel="noopener">Заказать в WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>Рейтинг, часы работы и средний чек взяты из карточки Tort-Pirog в 2ГИС.</footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy');
+  var num = '+7 747 238 09 95';
+  btn.addEventListener('click', function () {
+    function done() { btn.textContent = 'Скопировано'; setTimeout(function () { btn.textContent = 'Скопировать'; }, 1800); }
+    try {
+      navigator.clipboard.writeText(num).then(done, function () {
+        var r = document.createRange(); r.selectNodeContents(document.querySelector('.phone code'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      });
+    } catch (e) {
+      var r = document.createRange(); r.selectNodeContents(document.querySelector('.phone code'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+  });
+})();
+</script>
